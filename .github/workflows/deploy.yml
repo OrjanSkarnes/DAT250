@@ -25,4 +25,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/unit-converter:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/dat250:latest
