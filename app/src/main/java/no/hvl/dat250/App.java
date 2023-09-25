@@ -1,5 +1,9 @@
 package no.hvl.dat250;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
 import io.javalin.Javalin;
 
 public class App {
@@ -41,6 +45,16 @@ public class App {
     private static final double MI_TO_METER = 1609.344;
 
     public static void main(String[] args) {
+        ConnectionString connectionString = new ConnectionString("mongodb+srv://dat:kSP8p8zrhW9ppYHy@dat250.4set1ir.mongodb.net/?retryWrites=true&w=majority");
+
+        try (MongoClient mongoClient = MongoClients.create(connectionString)) {
+            CrudOperations crudOperations = new CrudOperations(mongoClient);
+            crudOperations.runCrudOperations();
+
+            CollectionOperations mapReduceExperiment = new CollectionOperations(mongoClient);
+            mapReduceExperiment.runAggregation();
+        }
+
         Javalin.create()
                 .get("/", ctx -> {
                     ctx.html(WEBPAGE);
